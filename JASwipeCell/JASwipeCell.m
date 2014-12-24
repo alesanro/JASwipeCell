@@ -438,7 +438,7 @@ typedef NS_ENUM(NSUInteger, JASwipeDirection) {
                     }
                 } else {
                     // Open to reveal right buttons
-                    if (fabs(currentX) >= [self rightButtonsTotalWidth]/2) {
+                    if (-currentX >= [self rightButtonsTotalWidth]/2) {
                         newXOffset = -[self rightButtonsTotalWidth];
                         [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
                             [self revealButtonsWithTopViewWithOffset:newXOffset swipeDirection:JASwipeDirectionLeft];
@@ -491,7 +491,7 @@ typedef NS_ENUM(NSUInteger, JASwipeDirection) {
                     }
                 } else {
                     // Open to reveal left buttons
-                    if (fabs(currentX) >= [self leftButtonsTotalWidth]/2) {
+                    if (currentX >= [self leftButtonsTotalWidth]/2) {
                         newXOffset = [self leftButtonsTotalWidth];
                         [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
                             [self revealButtonsWithTopViewWithOffset:newXOffset swipeDirection:JASwipeDirectionRight];
