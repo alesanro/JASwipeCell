@@ -323,7 +323,7 @@ typedef NS_ENUM(NSUInteger, JASwipeDirection) {
 
 - (IBAction)panHandler:(UIPanGestureRecognizer *)recognizer
 {
-    const CGFloat recognizeOpenCloseWidth = CGRectGetWidth(self.bounds)/3.f;
+    const CGFloat recognizeOpenCloseWidth = CGRectGetWidth(self.bounds)/5.f;
     const CGFloat recognizeMostButtonsOpenCloseWidth = 1.5f * recognizeOpenCloseWidth;
     
     switch (recognizer.state) {
