@@ -129,10 +129,11 @@ typedef NS_ENUM(NSUInteger, JASwipeDirection) {
 
 - (void)layoutSubviews
 {
-    
-    _panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panHandler:)];
-    _panGestureRecognizer.delegate = self;
-    [self.topContentView addGestureRecognizer:_panGestureRecognizer];
+    if (!_panGestureRecognizer ) {
+        _panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panHandler:)];
+        _panGestureRecognizer.delegate = self;
+        [self.topContentView addGestureRecognizer:_panGestureRecognizer];
+    }
     
     [super layoutSubviews];
     
