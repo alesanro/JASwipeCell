@@ -208,12 +208,12 @@ typedef NS_ENUM(NSUInteger, JASwipeDirection) {
 
 - (CGFloat)leftButtonsTotalWidth
 {
-    return self.leftButtons.count * self.leftButtonWidth;
+    return CGRectGetWidth(self.bounds)/3.f;
 }
 
 - (CGFloat)rightButtonsTotalWidth
 {
-    return self.rightButtons.count * self.rightButtonWidth;
+    return CGRectGetWidth(self.bounds)/3.f;
 }
 
 - (void)hideLeftButtons
@@ -323,6 +323,9 @@ typedef NS_ENUM(NSUInteger, JASwipeDirection) {
 
 - (IBAction)panHandler:(UIPanGestureRecognizer *)recognizer
 {
+    const CGFloat recognizeOpenCloseWidth = CGRectGetWidth(self.bounds)/3.f;
+    const CGFloat recognizeMostButtonsOpenCloseWidth = 1.5f * recognizeOpenCloseWidth;
+    
     switch (recognizer.state) {
         case UIGestureRecognizerStateBegan:
             self.startingPoint = self.topContentView.frame.origin;
@@ -361,7 +364,7 @@ typedef NS_ENUM(NSUInteger, JASwipeDirection) {
                 // Top view is open revealing the right buttons
                 else {
                     // Starting open with right buttons revealed
-                    if (fabs(self.startingPoint.x) == [self rightButtonsTotalWidth]) {
+                    if (fabs(self.startingPoint.x) == recognizeOpenCloseWidth) {
                         // Handle panning and revealing the right buttons
                         [self handlePanningButtons:newXOffset swipeDirection:JASwipeDirectionLeft];
                     }
@@ -387,7 +390,7 @@ typedef NS_ENUM(NSUInteger, JASwipeDirection) {
                 // Top view is open revealing the left buttons
                 else {
                     // Started open with right buttons revealed
-                    if (self.startingPoint.x == [self leftButtonsTotalWidth]) {
+                    if (self.startingPoint.x == recognizeOpenCloseWidth) {
                         // Handle panning and revealing the left buttons
                         [self handlePanningButtons:newXOffset swipeDirection:JASwipeDirectionRight];
                     }
@@ -411,7 +414,7 @@ typedef NS_ENUM(NSUInteger, JASwipeDirection) {
                 if (self.useMostButtonSwipe) {
                     
                     // Complete the swipe to the left
-                    if (fabs(currentX) > [self rightButtonsTotalWidth]) {
+                    if (fabs(currentX) > recognizeMostButtonsOpenCloseWidth) {
                         newXOffset = -self.topContentView.frame.size.width;
                         [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
                             [self pinButtonToTopViewWithOffset:newXOffset swipeDirection:JASwipeDirectionLeft];
@@ -421,7 +424,7 @@ typedef NS_ENUM(NSUInteger, JASwipeDirection) {
                         self.rightButtonsRevealed = NO;
                     }
                     // Open to reveal right buttons
-                    else if (fabs(currentX) == [self rightButtonsTotalWidth] || fabs(currentX) > [self rightButtonsTotalWidth]/2) {
+                    else if (fabs(currentX) == recognizeMostButtonsOpenCloseWidth || fabs(currentX) > recognizeOpenCloseWidth) {
                         newXOffset = -[self rightButtonsTotalWidth];
                         [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
                             [self revealButtonsWithTopViewWithOffset:newXOffset swipeDirection:JASwipeDirectionLeft];
@@ -438,7 +441,7 @@ typedef NS_ENUM(NSUInteger, JASwipeDirection) {
                     }
                 } else {
                     // Open to reveal right buttons
-                    if (-currentX >= [self rightButtonsTotalWidth]/2) {
+                    if (-currentX >= recognizeOpenCloseWidth) {
                         newXOffset = -[self rightButtonsTotalWidth];
                         [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
                             [self revealButtonsWithTopViewWithOffset:newXOffset swipeDirection:JASwipeDirectionLeft];
@@ -464,7 +467,7 @@ typedef NS_ENUM(NSUInteger, JASwipeDirection) {
                 
                 if (self.useMostButtonSwipe) {
                     // Complete the pan to the right
-                    if (currentX > [self leftButtonsTotalWidth]) {
+                    if (currentX > recognizeMostButtonsOpenCloseWidth) {
                         newXOffset = self.topContentView.frame.size.width;
                         [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
                             [self pinButtonToTopViewWithOffset:newXOffset swipeDirection:JASwipeDirectionRight];
@@ -474,7 +477,7 @@ typedef NS_ENUM(NSUInteger, JASwipeDirection) {
                         self.leftButtonsRevealed = NO;
                     }
                     // Open to reveal left buttons
-                    else if (currentX == [self leftButtonsTotalWidth] || fabs(currentX) > [self leftButtonsTotalWidth]/2) {
+                    else if (currentX == recognizeMostButtonsOpenCloseWidth || fabs(currentX) > recognizeOpenCloseWidth) {
                         newXOffset = [self leftButtonsTotalWidth];
                         [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
                             [self revealButtonsWithTopViewWithOffset:newXOffset swipeDirection:JASwipeDirectionRight];
@@ -491,7 +494,7 @@ typedef NS_ENUM(NSUInteger, JASwipeDirection) {
                     }
                 } else {
                     // Open to reveal left buttons
-                    if (currentX >= [self leftButtonsTotalWidth]/2) {
+                    if (currentX >= recognizeOpenCloseWidth) {
                         newXOffset = [self leftButtonsTotalWidth];
                         [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
                             [self revealButtonsWithTopViewWithOffset:newXOffset swipeDirection:JASwipeDirectionRight];
