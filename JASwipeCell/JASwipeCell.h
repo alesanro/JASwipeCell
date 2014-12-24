@@ -58,7 +58,7 @@ typedef NS_OPTIONS(NSUInteger, JAButtonLocation) {
  */
 @interface JASwipeCell : UITableViewCell
 // Top view that will contain all subviews displayed on the cell.
-@property (nonatomic, strong) UIView *topContentView;
+@property (nonatomic, weak) IBOutlet UIView *topContentView;
 // Delegate that will respond to cell swipes and button actions.
 @property (nonatomic, weak) id <JASwipeCellDelegate> delegate;
 

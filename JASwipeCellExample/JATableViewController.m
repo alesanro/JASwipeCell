@@ -24,10 +24,10 @@
 //  SOFTWARE.
 
 #import "JATableViewController.h"
-#import "JATableViewCell.h"
 #import "JAActionButton.h"
+#import "JASwipableCell.h"
 
-#define kJATableViewCellReuseIdentifier     @"JATableViewCellIdentifier"
+#define kJATableViewCellReuseIdentifier     @"JASwipableCellId"
 
 #define kFlagButtonColor        [UIColor colorWithRed:255.0/255.0 green:150.0/255.0 blue:0/255.0 alpha:1]
 #define kMoreButtonColor        [UIColor colorWithRed:200.0/255.0 green:200.0/255.0 blue:200.0/255.0 alpha:1]
@@ -48,7 +48,8 @@
     
     [self resetData];
     
-    [self.tableView registerClass:[JATableViewCell class] forCellReuseIdentifier:kJATableViewCellReuseIdentifier];
+    UINib *cellNib = [UINib nibWithNibName:NSStringFromClass([JASwipableCell class]) bundle:nil];
+    [self.tableView registerNib:cellNib forCellReuseIdentifier:kJATableViewCellReuseIdentifier];
     
     UIBarButtonItem *resetButton = [[UIBarButtonItem alloc] initWithTitle:@"Reset" style:UIBarButtonItemStylePlain target:self action:@selector(resetData)];
     self.navigationItem.rightBarButtonItem = resetButton;
@@ -118,7 +119,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    JATableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kJATableViewCellReuseIdentifier];
+    JASwipableCell *cell = [tableView dequeueReusableCellWithIdentifier:kJATableViewCellReuseIdentifier];
     
     [cell addActionButtons:[self leftButtons] withButtonWidth:kJAButtonWidth withButtonPosition:JAButtonLocationLeft];
     [cell addActionButtons:[self rightButtons] withButtonWidth:kJAButtonWidth withButtonPosition:JAButtonLocationRight];
@@ -137,7 +138,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 70;
+    return 44;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

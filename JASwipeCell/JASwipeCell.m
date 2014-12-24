@@ -66,36 +66,11 @@ typedef NS_ENUM(NSUInteger, JASwipeDirection) {
 @property (nonatomic) BOOL rightButtonsRevealed;
 
 // Holds the pan gesture recognizer applied to the cell
-@property (nonatomic, strong) UIPanGestureRecognizer *panGestureRecognizer;
+@property (nonatomic, strong) IBOutlet UIPanGestureRecognizer *panGestureRecognizer;
 
 @end
 
 @implementation JASwipeCell
-
-- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-        [self initialize];
-    }
-    return self;
-}
-
-- (void)initialize
-{
-    [self addSubview:self.topContentView];
-    _panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panHandler:)];
-    _panGestureRecognizer.delegate = self;
-    [self.topContentView addGestureRecognizer:_panGestureRecognizer];
-}
-
-- (UIView *)topContentView
-{
-    if (!_topContentView) {
-        _topContentView = [[UIView alloc] init];
-        _topContentView.backgroundColor = [UIColor whiteColor];
-    }
-    return _topContentView;
-}
 
 - (void)setLeftButtons:(NSArray *)leftButtons
 {
@@ -113,6 +88,10 @@ typedef NS_ENUM(NSUInteger, JASwipeDirection) {
         NSAssert([button isMemberOfClass:[JAActionButton class]], @"This cell expects JAActionButton class buttons");
         [button addTarget:self action:@selector(buttonTapped:) forControlEvents:UIControlEventTouchUpInside];
         [self.contentView addSubview:button];
+    }
+    
+    for (UIButton *button in _leftButtons) {
+        [self.contentView sendSubviewToBack:button];;
     }
 }
 
@@ -132,7 +111,13 @@ typedef NS_ENUM(NSUInteger, JASwipeDirection) {
         NSAssert([button isMemberOfClass:[JAActionButton class]], @"This cell expects JAActionButton class buttons");
         [button addTarget:self action:@selector(buttonTapped:) forControlEvents:UIControlEventTouchUpInside];
         [self.contentView addSubview:button];
+
     }
+    
+    for (UIButton *button in _rightButtons) {
+        [self.contentView sendSubviewToBack:button];;
+    }
+    
 }
 
 - (void)buttonTapped:(JAActionButton *)button
@@ -144,8 +129,13 @@ typedef NS_ENUM(NSUInteger, JASwipeDirection) {
 
 - (void)layoutSubviews
 {
-    [super layoutSubviews];
     
+    _panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panHandler:)];
+    _panGestureRecognizer.delegate = self;
+    [self.topContentView addGestureRecognizer:_panGestureRecognizer];
+    
+    [super layoutSubviews];
+
     if (!self.isLayoutApplied) {
         self.topContentView.frame = self.contentView.frame;
         // Layout left buttons
@@ -329,7 +319,7 @@ typedef NS_ENUM(NSUInteger, JASwipeDirection) {
 
 #pragma  -mark UIPanGestureRecognizer delegate methods
 
-- (void)panHandler:(UIPanGestureRecognizer *)recognizer
+- (IBAction)panHandler:(UIPanGestureRecognizer *)recognizer
 {
     switch (recognizer.state) {
         case UIGestureRecognizerStateBegan:

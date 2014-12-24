@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0468813D1A4AE361005C7152 /* JASwipableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0468813C1A4AE361005C7152 /* JASwipableCell.m */; };
+		0468813F1A4AE37A005C7152 /* JASwipableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0468813E1A4AE37A005C7152 /* JASwipableCell.xib */; };
 		5FC745F619E642BA00B50690 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FC745F519E642BA00B50690 /* CoreGraphics.framework */; };
 		5FC745F819E642BF00B50690 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FC745F719E642BF00B50690 /* UIKit.framework */; };
 		5FC745FA19E642C600B50690 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FC745F919E642C600B50690 /* Foundation.framework */; };
@@ -15,7 +17,6 @@
 		5FF23A4819FB01E600968333 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FF23A3119FB01E600968333 /* Main.storyboard */; };
 		5FF23A4919FB01E600968333 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5FF23A3319FB01E600968333 /* Images.xcassets */; };
 		5FF23A4A19FB01E600968333 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5FF23A3419FB01E600968333 /* Info.plist */; };
-		5FF23A4D19FB01E600968333 /* JATableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF23A3B19FB01E600968333 /* JATableViewCell.m */; };
 		5FF23A4E19FB01E600968333 /* JATableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF23A3D19FB01E600968333 /* JATableViewController.m */; };
 		5FF23A4F19FB01E600968333 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF23A3E19FB01E600968333 /* main.m */; };
 		5FF23A5019FB01E600968333 /* NSArray+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF23A4019FB01E600968333 /* NSArray+PureLayout.m */; };
@@ -35,6 +36,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0468813B1A4AE361005C7152 /* JASwipableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JASwipableCell.h; sourceTree = "<group>"; };
+		0468813C1A4AE361005C7152 /* JASwipableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JASwipableCell.m; sourceTree = "<group>"; };
+		0468813E1A4AE37A005C7152 /* JASwipableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JASwipableCell.xib; sourceTree = "<group>"; };
 		5FC745F119E6402600B50690 /* JASwipeCellExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JASwipeCellExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FC745F219E6402600B50690 /* JASwipeCellExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JASwipeCellExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FC745F519E642BA00B50690 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -47,8 +51,6 @@
 		5FF23A3219FB01E600968333 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5FF23A3319FB01E600968333 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		5FF23A3419FB01E600968333 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5FF23A3A19FB01E600968333 /* JATableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JATableViewCell.h; sourceTree = "<group>"; };
-		5FF23A3B19FB01E600968333 /* JATableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JATableViewCell.m; sourceTree = "<group>"; };
 		5FF23A3C19FB01E600968333 /* JATableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JATableViewController.h; sourceTree = "<group>"; };
 		5FF23A3D19FB01E600968333 /* JATableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JATableViewController.m; sourceTree = "<group>"; };
 		5FF23A3E19FB01E600968333 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -112,8 +114,9 @@
 				5FF23A3119FB01E600968333 /* Main.storyboard */,
 				5FF23A3319FB01E600968333 /* Images.xcassets */,
 				5FF23A3419FB01E600968333 /* Info.plist */,
-				5FF23A3A19FB01E600968333 /* JATableViewCell.h */,
-				5FF23A3B19FB01E600968333 /* JATableViewCell.m */,
+				0468813B1A4AE361005C7152 /* JASwipableCell.h */,
+				0468813C1A4AE361005C7152 /* JASwipableCell.m */,
+				0468813E1A4AE37A005C7152 /* JASwipableCell.xib */,
 				5FF23A3C19FB01E600968333 /* JATableViewController.h */,
 				5FF23A3D19FB01E600968333 /* JATableViewController.m */,
 				5FF23A3E19FB01E600968333 /* main.m */,
@@ -242,6 +245,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5FF23A4819FB01E600968333 /* Main.storyboard in Resources */,
+				0468813F1A4AE37A005C7152 /* JASwipableCell.xib in Resources */,
 				5FF23A4919FB01E600968333 /* Images.xcassets in Resources */,
 				5FF23A4A19FB01E600968333 /* Info.plist in Resources */,
 			);
@@ -262,8 +266,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				5FF23A5819FB02BF00968333 /* JAActionButton.m in Sources */,
-				5FF23A4D19FB01E600968333 /* JATableViewCell.m in Sources */,
 				5FF23A4719FB01E600968333 /* AppDelegate.m in Sources */,
+				0468813D1A4AE361005C7152 /* JASwipableCell.m in Sources */,
 				5FF23A4619FB01E600968333 /* ALView+PureLayout.m in Sources */,
 				5FF23A5019FB01E600968333 /* NSArray+PureLayout.m in Sources */,
 				5FF23A5119FB01E600968333 /* NSLayoutConstraint+PureLayout.m in Sources */,
