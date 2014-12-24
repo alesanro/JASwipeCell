@@ -49,6 +49,8 @@ typedef NS_OPTIONS(NSUInteger, JAButtonLocation) {
 - (void)swipingLeftForCell:(JASwipeCell *)cell;
 @end
 
+IB_DESIGNABLE
+
 /**
  This cell class provides a mechanism for rendering JAActionButtons behind a top container
  view. These buttons can be added to the left and/or right side of the cell. This is a similar
@@ -61,6 +63,8 @@ typedef NS_OPTIONS(NSUInteger, JAButtonLocation) {
 @property (nonatomic, weak) IBOutlet UIView *topContentView;
 // Delegate that will respond to cell swipes and button actions.
 @property (nonatomic, weak) id <JASwipeCellDelegate> delegate;
+
+@property (nonatomic, assign) IBInspectable BOOL useMostButtonSwipe;
 
 /**
  Adds action buttons to the cell at the specified location with default widths.

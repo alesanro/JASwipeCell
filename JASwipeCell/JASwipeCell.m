@@ -111,7 +111,7 @@ typedef NS_ENUM(NSUInteger, JASwipeDirection) {
         NSAssert([button isMemberOfClass:[JAActionButton class]], @"This cell expects JAActionButton class buttons");
         [button addTarget:self action:@selector(buttonTapped:) forControlEvents:UIControlEventTouchUpInside];
         [self.contentView addSubview:button];
-
+        
     }
     
     for (UIButton *button in _rightButtons) {
@@ -135,7 +135,7 @@ typedef NS_ENUM(NSUInteger, JASwipeDirection) {
     [self.topContentView addGestureRecognizer:_panGestureRecognizer];
     
     [super layoutSubviews];
-
+    
     if (!self.isLayoutApplied) {
         self.topContentView.frame = self.contentView.frame;
         // Layout left buttons
@@ -261,9 +261,9 @@ typedef NS_ENUM(NSUInteger, JASwipeDirection) {
             self.topContentView.frame = frame;
             [self revealButtonsWithTopViewWithOffset:0 swipeDirection:JASwipeDirectionLeft];
         } completion:nil];
-
+        
     }
-
+    
 }
 
 - (void)completePinToTopViewAnimation
@@ -405,31 +405,52 @@ typedef NS_ENUM(NSUInteger, JASwipeDirection) {
                 if (self.rightButtons.count == 0) {
                     return;
                 }
-                // Complete the swipe to the left
-                if (fabs(currentX) > [self rightButtonsTotalWidth]) {
-                    newXOffset = -self.topContentView.frame.size.width;
-                    [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-                        [self pinButtonToTopViewWithOffset:newXOffset swipeDirection:JASwipeDirectionLeft];
-                    } completion:^(BOOL finished) {
-                        [self.delegate rightMostButtonSwipeCompleted:self];
-                    }];
-                    self.rightButtonsRevealed = NO;
-                }
-                // Open to reveal right buttons
-                else if (fabs(currentX) == [self rightButtonsTotalWidth] || fabs(currentX) > [self rightButtonsTotalWidth]/2) {
-                    newXOffset = -[self rightButtonsTotalWidth];
-                    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-                        [self revealButtonsWithTopViewWithOffset:newXOffset swipeDirection:JASwipeDirectionLeft];
-                    } completion:nil];
-                    self.rightButtonsRevealed = YES;
-                }
-                // Move top view to closed state
-                else {
-                    newXOffset = 0;
-                    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-                        [self revealButtonsWithTopViewWithOffset:newXOffset swipeDirection:JASwipeDirectionLeft];
-                    } completion:nil];
-                    self.rightButtonsRevealed = NO;
+                
+                if (self.useMostButtonSwipe) {
+                    
+                    // Complete the swipe to the left
+                    if (fabs(currentX) > [self rightButtonsTotalWidth]) {
+                        newXOffset = -self.topContentView.frame.size.width;
+                        [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                            [self pinButtonToTopViewWithOffset:newXOffset swipeDirection:JASwipeDirectionLeft];
+                        } completion:^(BOOL finished) {
+                            [self.delegate rightMostButtonSwipeCompleted:self];
+                        }];
+                        self.rightButtonsRevealed = NO;
+                    }
+                    // Open to reveal right buttons
+                    else if (fabs(currentX) == [self rightButtonsTotalWidth] || fabs(currentX) > [self rightButtonsTotalWidth]/2) {
+                        newXOffset = -[self rightButtonsTotalWidth];
+                        [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                            [self revealButtonsWithTopViewWithOffset:newXOffset swipeDirection:JASwipeDirectionLeft];
+                        } completion:nil];
+                        self.rightButtonsRevealed = YES;
+                    }
+                    // Move top view to closed state
+                    else {
+                        newXOffset = 0;
+                        [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                            [self revealButtonsWithTopViewWithOffset:newXOffset swipeDirection:JASwipeDirectionLeft];
+                        } completion:nil];
+                        self.rightButtonsRevealed = NO;
+                    }
+                } else {
+                    // Open to reveal right buttons
+                    if (fabs(currentX) >= [self rightButtonsTotalWidth]/2) {
+                        newXOffset = -[self rightButtonsTotalWidth];
+                        [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                            [self revealButtonsWithTopViewWithOffset:newXOffset swipeDirection:JASwipeDirectionLeft];
+                        } completion:nil];
+                        self.rightButtonsRevealed = YES;
+                    }
+                    // Move top view to closed state
+                    else {
+                        newXOffset = 0;
+                        [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                            [self revealButtonsWithTopViewWithOffset:newXOffset swipeDirection:JASwipeDirectionLeft];
+                        } completion:nil];
+                        self.rightButtonsRevealed = NO;
+                    }
                 }
             }
             // Swiping right
@@ -438,34 +459,54 @@ typedef NS_ENUM(NSUInteger, JASwipeDirection) {
                 if (self.leftButtons.count == 0) {
                     return;
                 }
-                // Complete the pan to the right
-                if (currentX > [self leftButtonsTotalWidth]) {
-                    newXOffset = self.topContentView.frame.size.width;
-                    [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-                        [self pinButtonToTopViewWithOffset:newXOffset swipeDirection:JASwipeDirectionRight];
-                    } completion:^(BOOL finished) {
-                        [self.delegate leftMostButtonSwipeCompleted:self];
-                    }];
-                    self.leftButtonsRevealed = NO;
-                }
-                // Open to reveal left buttons
-                else if (currentX == [self leftButtonsTotalWidth] || fabs(currentX) > [self leftButtonsTotalWidth]/2) {
-                    newXOffset = [self leftButtonsTotalWidth];
-                    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-                        [self revealButtonsWithTopViewWithOffset:newXOffset swipeDirection:JASwipeDirectionRight];
-                    } completion:nil];
-                    self.leftButtonsRevealed = YES;
-                }
-                // Move top view to closed state
-                else {
-                    newXOffset = 0;
-                    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-                        [self revealButtonsWithTopViewWithOffset:newXOffset swipeDirection:JASwipeDirectionRight];
-                    } completion:nil];
-                    self.leftButtonsRevealed = NO;
+                
+                if (self.useMostButtonSwipe) {
+                    // Complete the pan to the right
+                    if (currentX > [self leftButtonsTotalWidth]) {
+                        newXOffset = self.topContentView.frame.size.width;
+                        [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                            [self pinButtonToTopViewWithOffset:newXOffset swipeDirection:JASwipeDirectionRight];
+                        } completion:^(BOOL finished) {
+                            [self.delegate leftMostButtonSwipeCompleted:self];
+                        }];
+                        self.leftButtonsRevealed = NO;
+                    }
+                    // Open to reveal left buttons
+                    else if (currentX == [self leftButtonsTotalWidth] || fabs(currentX) > [self leftButtonsTotalWidth]/2) {
+                        newXOffset = [self leftButtonsTotalWidth];
+                        [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                            [self revealButtonsWithTopViewWithOffset:newXOffset swipeDirection:JASwipeDirectionRight];
+                        } completion:nil];
+                        self.leftButtonsRevealed = YES;
+                    }
+                    // Move top view to closed state
+                    else {
+                        newXOffset = 0;
+                        [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                            [self revealButtonsWithTopViewWithOffset:newXOffset swipeDirection:JASwipeDirectionRight];
+                        } completion:nil];
+                        self.leftButtonsRevealed = NO;
+                    }
+                } else {
+                    // Open to reveal left buttons
+                    if (fabs(currentX) >= [self leftButtonsTotalWidth]/2) {
+                        newXOffset = [self leftButtonsTotalWidth];
+                        [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                            [self revealButtonsWithTopViewWithOffset:newXOffset swipeDirection:JASwipeDirectionRight];
+                        } completion:nil];
+                        self.leftButtonsRevealed = YES;
+                    }
+                    // Move top view to closed state
+                    else {
+                        newXOffset = 0;
+                        [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                            [self revealButtonsWithTopViewWithOffset:newXOffset swipeDirection:JASwipeDirectionRight];
+                        } completion:nil];
+                        self.leftButtonsRevealed = NO;
+                    }
                 }
             }
-           
+            
             [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
                 self.topContentView.frame = CGRectMake(newXOffset, self.topContentView.frame.origin.y, CGRectGetWidth(self.topContentView.frame), CGRectGetHeight(self.topContentView.frame));
             } completion:nil];
