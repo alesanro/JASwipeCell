@@ -117,7 +117,6 @@ typedef NS_ENUM(NSUInteger, JASwipeDirection) {
     for (UIButton *button in _rightButtons) {
         [self.contentView sendSubviewToBack:button];;
     }
-    
 }
 
 - (void)buttonTapped:(JAActionButton *)button
@@ -151,6 +150,7 @@ typedef NS_ENUM(NSUInteger, JASwipeDirection) {
                 [lButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
                 // Add right padding to the button title
                 [lButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, kButtonTitlePadding)];
+                [lButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, (self.leftButtonWidth - CGRectGetWidth(lButton.imageView.bounds))/2.f)];
             } else {
                 lButton.frame = CGRectMake(-self.leftButtonWidth , 0, self.leftButtonWidth, self.contentView.frame.size.height);
             }
@@ -170,6 +170,7 @@ typedef NS_ENUM(NSUInteger, JASwipeDirection) {
                 [rButton setTitleEdgeInsets:UIEdgeInsetsMake(0, kButtonTitlePadding, 0, 0)];
             } else {
                 rButton.frame = CGRectMake(self.contentView.frame.size.width, 0, self.rightButtonWidth, self.contentView.frame.size.height);
+                [rButton setImageEdgeInsets:UIEdgeInsetsMake(0, (self.rightButtonWidth - CGRectGetWidth(rButton.imageView.bounds))/2.f, 0, 0)];
             }
         }
         
